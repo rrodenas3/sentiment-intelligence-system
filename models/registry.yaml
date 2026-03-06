@@ -1,0 +1,11 @@
+models:
+  - name: vader_baseline
+    version: "vader-baseline-1.0"
+    engine: "vaderSentiment"
+    description: "Rule-based English sentiment baseline for real-time scoring."
+    thresholds:
+      negative: -0.05
+      positive: 0.05
+    training_data_snapshot: "n/a (pretrained library)"
+    notes: "Used as baseline with macro F1 >= 0.70 on validation set; stretch goal 0.75."
+
