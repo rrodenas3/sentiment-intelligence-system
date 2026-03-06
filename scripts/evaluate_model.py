@@ -35,9 +35,15 @@ def load_validation(path: Path):
 
 def main() -> None:
     base_dir = Path(__file__).resolve().parent.parent
+    reports_dir = base_dir / "reports"
+    reports_dir.mkdir(parents=True, exist_ok=True)
+
     val_path = base_dir / "data" / "validation" / "validation.csv"
     if not val_path.exists():
         print(f"No validation dataset found at {val_path} – skipping evaluation.")
+        # Create an empty placeholder report so the upload step doesn't fail
+        dummy_report = {"info": "Validation dataset missing, evaluation skipped."}
+        (reports_dir / "no_val_report.json").write_text(json.dumps(dummy_report), encoding="utf-8")
         return
 
     y_true: list[str] = []
@@ -76,8 +82,6 @@ def main() -> None:
         "support": Counter(y_true),
     }
 
-    reports_dir = base_dir / "reports"
-    reports_dir.mkdir(parents=True, exist_ok=True)
     out_path = reports_dir / "model_eval_vader-baseline-1.0.json"
     out_path.write_text(json.dumps(report, indent=2), encoding="utf-8")
     print(f"Wrote evaluation report to {out_path}")
@@ -86,4 +90,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
