@@ -1,3 +1,3 @@
-from .sentiment import sentiment_service
+from .sentiment import score_text, sentiment_service
 
-__all__ = ["sentiment_service"]
+__all__ = ["score_text", "sentiment_service"]
